@@ -1,0 +1,185 @@
+.container-slider {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* #region SEARCH */
+
+/* #region Mobile First: Стилі для Small Mobile devices */
+.container-input {
+    position: relative;
+}
+
+.input-search {
+    border-radius: 40px;
+    max-width: 280px;
+    min-height: 48px;
+    box-shadow: 0 4px 40px 0 rgba(0, 0, 0, 0.25);
+    background: #444;
+    padding: 10px 60px 8px 70px;
+
+    font-weight: 400;
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.input-icon {
+    position: absolute;
+    top: 50%;
+    left: 20px;
+    transform: translateY(-50%);
+
+    fill: #111;
+    stroke: #111;
+}
+
+/* #endregion */
+
+/* #region Big Mobile Devices (min-width: 480px) */
+@media only screen and (min-width: 480px) {
+    .input-search {
+        max-width: 320px;
+        min-height: 52px;
+        padding: 12px 70px 10px 80px;
+        font-size: 16px;
+    }
+}
+
+/* #endregion */
+
+/* #region Tablet Devices (min-width: 768px) */
+@media only screen and (min-width: 768px) {
+    .input-search {
+        max-width: 400px;
+        min-height: 56px;
+        padding: 14px 80px 12px 90px;
+        font-size: 18px;
+    }
+}
+
+/* #endregion */
+
+/* #region Big Tablet Devices (min-width: 1024px) */
+@media only screen and (min-width: 1024px) {
+    .input-search {
+        max-width: 500px;
+        min-height: 60px;
+        padding: 16px 90px 14px 100px;
+        font-size: 18px;
+    }
+}
+
+/* #endregion */
+
+/* #region Small Desktop Devices (min-width: 1280px) */
+@media only screen and (min-width: 1280px) {
+    .input-search {
+        max-width: 600px;
+        min-height: 64px;
+        padding: 18px 100px 16px 110px;
+        font-size: 20px;
+    }
+}
+
+/* #endregion */
+
+/* #region Desktop Devices (min-width: 1440px) */
+@media only screen and (min-width: 1440px) {
+    .input-search {
+        max-width: 803px;
+        min-height: 62px;
+        padding: 20px 80px 14px 102px;
+        font-size: 18px;
+    }
+}
+
+/* #endregion */
+
+/* #endregion SEARCH */
+
+/* #region BUTTON */
+
+.btn-location {
+    border-radius: 40px;
+    width: 292px;
+    height: 62px;
+    box-shadow: 0 4px 40px 0 rgba(0, 0, 0, 0.25);
+    background: #4cbb17;
+    border: none;
+    font-family: "Poppins", sans-serif;
+    font-weight: 800;
+    font-size: 22px;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* Mobile First: Стилі для Small Mobile devices */
+.btn-location {
+    border-radius: 40px;
+    width: 80%;
+    /* Ширина кнопки буде займати 80% ширини контейнера */
+    height: 50px;
+    /* Зменшена висота */
+    box-shadow: 0 4px 40px 0 rgba(0, 0, 0, 0.25);
+    background: #4cbb17;
+    border: none;
+    font-family: "Poppins", sans-serif;
+    font-weight: 800;
+    font-size: 18px;
+    /* Зменшений розмір шрифту */
+    text-align: center;
+    color: rgba(255, 255, 255, 0.8);
+    padding: 0;
+}
+
+/* Big Mobile Devices (min-width: 480px) */
+@media only screen and (min-width: 480px) {
+    .btn-location {
+        width: 80%;
+        /* Залишаємо ширину 80% для більшості мобільних */
+        height: 55px;
+        font-size: 20px;
+    }
+}
+
+/* Tablet Devices (min-width: 768px) */
+@media only screen and (min-width: 768px) {
+    .btn-location {
+        width: 70%;
+        height: 60px;
+        font-size: 22px;
+        /* Повертаємо стандартний розмір шрифту */
+    }
+}
+
+/* Big Tablet Devices (min-width: 1024px) */
+@media only screen and (min-width: 1024px) {
+    .btn-location {
+        width: 60%;
+        height: 62px;
+        font-size: 22px;
+    }
+}
+
+/* Small Desktop Devices (min-width: 1280px) */
+@media only screen and (min-width: 1280px) {
+    .btn-location {
+        width: 300px;
+        /* Фіксована ширина */
+        height: 62px;
+        font-size: 24px;
+    }
+}
+
+/* Desktop Devices (min-width: 1440px) */
+@media only screen and (min-width: 1440px) {
+    .btn-location {
+        width: 292px;
+        /* Оригінальна ширина */
+        height: 62px;
+        font-size: 22px;
+    }
+}
+
+/* #endregion BUTTON */
