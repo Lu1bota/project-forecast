@@ -1,8 +1,10 @@
+import './js/slider';
+
 const API_KEY = '7a2dfcb51e1141c71771f685e7f4e2df';
 
 const coordinatesOptions = {
-  city: 'Kharkiv',
-  limit: 1,
+  city: 'Старий Мерчик',
+  limit: 5,
 };
 
 fetch(
@@ -19,6 +21,7 @@ fetch(
       lat: data[0].lat,
       lon: data[0].lon,
       lang: 'ua, uk',
+      units: 'metric',
     };
     console.log(data);
     console.log(data[0].lat);
@@ -34,7 +37,7 @@ fetch(
 
 function getCoordinates(options) {
   return fetch(
-    `https://api.openweathermap.org/data/3.0/onecall?lat=${options.lat}&lon=${options.lon}&appid=${API_KEY}&lang=${options.lang}`
+    `https://api.openweathermap.org/data/2.5/weather?lat=${options.lat}&lon=${options.lon}&appid=${API_KEY}&lang=${options.lang}&units=${options.units}`
   ).then(response => {
     if (!response.ok) {
       throw new Error(response.status);
