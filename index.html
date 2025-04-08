@@ -1,47 +1,155 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="uk">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/project-forecast/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Forecast</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-      rel="stylesheet"
-    />
+    <title>Прогноз Погоди</title>
     <script type="module" crossorigin src="/project-forecast/index.js"></script>
-    <link rel="stylesheet" crossorigin href="/project-forecast/assets/index-BJ6MDYoo.css">
+    <link rel="stylesheet" crossorigin href="/project-forecast/assets/index-C9KKjo2q.css">
   </head>
-  <body>
-    <main>
-      <!-- Loads the specified .html file -->
-      <div class="container container-slider">
-  <label class="switch">
-    <input type="checkbox" class="switch-input" />
-    <span class="switch-clider"></span>
-  </label>
+  <body class="dark-theme">
+    <header class="site-header container">
+      <div class="controls">
+        <div class="container-slider">
+          <label class="switch">
+            <input type="checkbox" class="switch-input" checked />
+            <span class="switch-clider"></span>
+            <span class="visually-hidden">Перемикач темної/світлої теми</span>
+          </label>
+        </div>
 
-  <div class="container-search">
-    <label for="search"></label>
-    <div class="container-input">
-      <input
-        class="input-search"
-        type="search"
-        name="serch"
-        id="search"
-        placeholder="Search for your preffered city..."
-      />
-      <svg class="input-icon" width="40" height="46">
-        <use href="../img/icons.svg#search"></use>
-      </svg>
-    </div>
-  </div>
+        <form class="search-form" action="#">
+          <span class="search-icon">🔍</span>
+          <input
+            type="text"
+            name="city"
+            placeholder="Шукайте бажане місто..."
+            aria-label="Пошук міста"
+            required
+          />
+          <button type="submit" class="search-submit-btn" aria-label="Знайти">
+            &#10148;
+          </button>
+        </form>
+        <button class="current-location-btn">
+          <span class="location-icon">📍</span> Поточна Локація
+        </button>
+      </div>
+    </header>
 
-  <button type="button" class="btn-location">Current Location</button>
-</div>
+    <main class="container">
+      <section class="current-weather">
+        <div class="location-time">
+          <h1>Афіни</h1>
+          <time class="current-time">09:03</time>
+          <p class="current-date">Четвер, 31 Сер</p>
+        </div>
+        <div class="weather-details">
+          <div class="temperature-info">
+            <p class="main-temp">24°C</p>
+            <p class="feels-like">
+              Відчувається як: <span class="feels-like-span">22°C</span>
+            </p>
+            <div class="sun-times">
+              <p>↑ Схід <time class="time-up">06:37</time></p>
+              <p>↓ Захід <time class="time-down">20:37</time></p>
+            </div>
+          </div>
+          <div class="weather-condition">
+            <div class="weather-icon">☀️</div>
+            <p class="description">Сонячно</p>
+          </div>
+          <div class="additional-info">
+            <div class="info-item">
+              <span class="icon">💧</span>
+              <p class="humidity">41%</p>
+              <small>Вологість</small>
+            </div>
+            <div class="info-item">
+              <span class="icon">💨</span>
+              <p class="wind">2км/г</p>
+              <small>Вітер</small>
+            </div>
+            <div class="info-item">
+              <span class="icon">⏱️</span>
+              <p class="pressure">997гПа</p>
+              <small>Тиск</small>
+            </div>
+            <div class="info-item">
+              <span class="icon">🔆</span>
+              <p class="ultraviolet">8</p>
+              <small>УФ-індекс</small>
+            </div>
+          </div>
+        </div>
+      </section>
 
+      <section class="forecast">
+        <div class="daily-forecast">
+          <h2>Прогноз на 5 днів:</h2>
+          <ul>
+            <li>
+              <span class="icon">⛅</span> <span class="temp">20°C</span>
+              <span class="day">П'ятниця, 1 Вер</span>
+            </li>
+            <li>
+              <span class="icon">🌤️</span>
+              <span class="temp">22°C</span>
+              <span class="day">Субота, 2 Вер</span>
+            </li>
+            <li>
+              <span class="icon">☀️</span>
+              <span class="temp">27°C</span>
+              <span class="day">Неділя, 3 Вер</span>
+            </li>
+            <li>
+              <span class="icon">🌦️</span>
+              <span class="temp">18°C</span>
+              <span class="day">Понеділок, 4 Вер</span>
+            </li>
+            <li>
+              <span class="icon">🌧️</span>
+              <span class="temp">16°C</span>
+              <span class="day">Вівторок, 5 Вер</span>
+            </li>
+          </ul>
+        </div>
+        <div class="hourly-forecast">
+          <h2>Погодинний прогноз:</h2>
+          <div class="hourly-cards">
+            <article class="hour-card">
+              <time>12:00</time>
+              <span class="icon">☀️</span>
+              <p class="temp">26°C</p>
+              <p class="wind">3км/г</p>
+            </article>
+            <article class="hour-card">
+              <time>15:00</time>
+              <span class="icon">☀️</span>
+              <p class="temp">27°C</p>
+              <p class="wind">2км/г</p>
+            </article>
+            <article class="hour-card">
+              <time>18:00</time>
+              <span class="icon">⛅</span>
+              <p class="temp">27°C</p>
+              <p class="wind">2км/г</p>
+            </article>
+            <article class="hour-card">
+              <time>21:00</time>
+              <span class="icon">☁️</span>
+              <p class="temp">25°C</p>
+              <p class="wind">2км/г</p>
+            </article>
+            <article class="hour-card">
+              <time>00:00</time>
+              <span class="icon">🌙</span>
+              <p class="temp">22°C</p>
+              <p class="wind">3км/г</p>
+            </article>
+          </div>
+        </div>
+      </section>
     </main>
 
   </body>
