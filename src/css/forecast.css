@@ -1,185 +1,926 @@
-.container-slider {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+/* Загальні стилі та змінні */
+:root {
+    --bg-color-dark: #212121;
+    --card-bg-dark: #333;
+    --text-color-dark: #ffffff;
+    --text-muted-dark: #b0b0b0;
+    --accent-color-dark: #4caf50;
+    /* Зелений для кнопки */
+    --border-radius: 15px;
+    --container-padding: 20px;
+    --icon-size: 2em;
+
+    /* Змінні для світлої теми */
+    --bg-color-light: #f0f0f0;
+    --card-bg-light: #ffffff;
+    --text-color-light: #333333;
+    --text-muted-light: #757575;
+    --accent-color-light: #2196f3;
+    /* Синій для кнопки */
 }
 
-/* #region SEARCH */
+body {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    margin: 0;
+    padding: var(--container-padding);
+    transition: background-color 0.4s, color 0.4s;
+    animation: fadeIn 0.8s ease-in-out;
+    /* Анімація появи */
+}
 
-/* #region Mobile First: Стилі для Small Mobile devices */
-.container-input {
+/* Темна тема */
+body.dark-theme {
+    background-color: var(--bg-color-dark);
+    color: var(--text-color-dark);
+}
+
+/* Світла тема */
+body.light-theme {
+    background-color: var(--bg-color-light);
+    color: var(--text-color-light);
+}
+
+/* Стилі для зміни фону/кольору карток при зміні теми */
+body.light-theme .site-header,
+body.light-theme .current-weather>div,
+body.light-theme .forecast>div,
+body.light-theme .search-bar input,
+body.light-theme .hour-card {
+    background-color: var(--card-bg-light);
+    color: var(--text-color-light);
+    border: 1px solid #e0e0e0;
+}
+
+body.light-theme .search-bar input::placeholder {
+    color: var(--text-muted-light);
+}
+
+body.light-theme h1,
+body.light-theme h2 {
+    color: var(--text-color-light);
+}
+
+body.light-theme p,
+body.light-theme time,
+body.light-theme small,
+body.light-theme span.temp,
+body.light-theme span.day,
+body.light-theme li {
+    color: var(--text-color-light);
+}
+
+body.light-theme .current-time,
+body.light-theme .main-temp {
+    color: var(--accent-color-light);
+}
+
+/* Зверніть увагу: перейменували клас або використовуємо інший селектор */
+body.light-theme .current-date,
+body.light-theme .feels-like,
+body.light-theme .sun-times p,
+body.light-theme .additional-info .icon,
+body.light-theme .additional-info small,
+body.light-theme .daily-forecast .day,
+body.light-theme .hour-card time,
+body.light-theme .hour-card .wind,
+body.light-theme .search-bar .search-icon {
+    color: var(--text-muted-light);
+}
+
+body.light-theme .sun-times time {
+    color: var(--text-color-light);
+}
+
+body.light-theme .current-location-btn {
+    background-color: var(--accent-color-light);
+    color: white;
+}
+
+body.light-theme .hourly-forecast h2,
+body.light-theme .daily-forecast h2 {
+    color: var(--text-muted-light);
+    border-bottom-color: #ddd;
+}
+
+body.light-theme .daily-forecast li {
+    border-bottom-color: #eee;
+}
+
+body.light-theme .daily-forecast li:hover {
+    background-color: rgba(0, 0, 0, 0.03);
+}
+
+body.light-theme .hour-card {
+    background-color: #f8f8f8;
+}
+
+/* --- Перемикач Теми --- */
+body.light-theme .switch-clider {
+    background-color: #ccc;
+}
+
+body.light-theme .switch-input:checked+.switch-clider {
+    /* Якщо checked = true, це темна тема, тому слайдер має бути сірим */
+    background-color: #5a5a5a;
+}
+
+body.light-theme .switch-input:not(:checked)+.switch-clider {
+    /* Якщо checked = false, це світла тема, слайдер активний (синій) */
+    background-color: #2196f3;
+}
+
+body.light-theme .switch-input:focus+.switch-clider {
+    box-shadow: 0 0 2px #6bbaff;
+}
+
+/* --- Кінець стилів для світлої теми --- */
+
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--container-padding);
+}
+
+/* Анімація */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* Утиліта для візуального приховування (для доступності) */
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+
+/* ---- Header ---- */
+.site-header {
+    margin-bottom: 30px;
+}
+
+.controls {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    /* Для адаптивності */
+}
+
+.search-bar {
+    flex-grow: 1;
+    /* Займає доступний простір */
     position: relative;
 }
 
-.input-search {
-    border-radius: 40px;
-    max-width: 280px;
-    min-height: 48px;
-    box-shadow: 0 4px 40px 0 rgba(0, 0, 0, 0.25);
-    background: #444;
-    padding: 10px 60px 8px 70px;
-
-    font-weight: 400;
-    font-size: 16px;
-    color: rgba(255, 255, 255, 0.6);
-}
-
-.input-icon {
+.search-bar .search-icon {
     position: absolute;
+    left: 15px;
     top: 50%;
-    left: 20px;
     transform: translateY(-50%);
-
-    fill: #111;
-    stroke: #111;
+    color: var(--text-muted-dark);
+    /* Для темної теми */
 }
 
-/* #endregion */
 
-/* #region Big Mobile Devices (min-width: 480px) */
-@media only screen and (min-width: 480px) {
-    .input-search {
-        max-width: 320px;
-        min-height: 52px;
-        padding: 12px 70px 10px 80px;
-        font-size: 16px;
-    }
-}
-
-/* #endregion */
-
-/* #region Tablet Devices (min-width: 768px) */
-@media only screen and (min-width: 768px) {
-    .input-search {
-        max-width: 400px;
-        min-height: 56px;
-        padding: 14px 80px 12px 90px;
-        font-size: 18px;
-    }
-}
-
-/* #endregion */
-
-/* #region Big Tablet Devices (min-width: 1024px) */
-@media only screen and (min-width: 1024px) {
-    .input-search {
-        max-width: 500px;
-        min-height: 60px;
-        padding: 16px 90px 14px 100px;
-        font-size: 18px;
-    }
-}
-
-/* #endregion */
-
-/* #region Small Desktop Devices (min-width: 1280px) */
-@media only screen and (min-width: 1280px) {
-    .input-search {
-        max-width: 600px;
-        min-height: 64px;
-        padding: 18px 100px 16px 110px;
-        font-size: 20px;
-    }
-}
-
-/* #endregion */
-
-/* #region Desktop Devices (min-width: 1440px) */
-@media only screen and (min-width: 1440px) {
-    .input-search {
-        max-width: 803px;
-        min-height: 62px;
-        padding: 20px 80px 14px 102px;
-        font-size: 18px;
-    }
-}
-
-/* #endregion */
-
-/* #endregion SEARCH */
-
-/* #region BUTTON */
-
-.btn-location {
-    border-radius: 40px;
-    width: 292px;
-    height: 62px;
-    box-shadow: 0 4px 40px 0 rgba(0, 0, 0, 0.25);
-    background: #4cbb17;
+.search-bar input {
+    width: 100%;
+    padding: 10px 15px 10px 40px;
+    /* Відступ для іконки */
+    border-radius: 20px;
     border: none;
-    font-family: "Poppins", sans-serif;
-    font-weight: 800;
-    font-size: 22px;
-    text-align: center;
-    color: rgba(255, 255, 255, 0.8);
+    background-color: var(--card-bg-dark);
+    /* Для темної теми */
+    color: var(--text-color-dark);
+    /* Для темної теми */
+    font-size: 1rem;
+    box-sizing: border-box;
+    /* Щоб padding не збільшував ширину */
 }
 
-/* Mobile First: Стилі для Small Mobile devices */
-.btn-location {
-    border-radius: 40px;
-    width: 80%;
-    /* Ширина кнопки буде займати 80% ширини контейнера */
-    height: 50px;
-    /* Зменшена висота */
-    box-shadow: 0 4px 40px 0 rgba(0, 0, 0, 0.25);
-    background: #4cbb17;
+.search-bar input::placeholder {
+    color: var(--text-muted-dark);
+    /* Для темної теми */
+}
+
+
+.current-location-btn {
+    padding: 10px 20px;
+    background-color: var(--accent-color-dark);
+    /* Для темної теми */
+    color: white;
     border: none;
-    font-family: "Poppins", sans-serif;
-    font-weight: 800;
-    font-size: 18px;
-    /* Зменшений розмір шрифту */
+    border-radius: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: bold;
+    transition: background-color 0.3s, transform 0.2s;
+    flex-shrink: 0;
+    /* Не стискати кнопку */
+}
+
+.current-location-btn:hover {
+    opacity: 0.9;
+    transform: scale(1.03);
+}
+
+.current-location-btn .location-icon {
+    font-size: 1.2em;
+}
+
+
+/* ---- Ваш Слайдер (з виправленнями) ---- */
+.container-slider {
+    display: inline-flex;
+    /* Змінено для компактності */
+    align-items: center;
+    /* gap: 10px; - Якщо текст приховано, gap не потрібен */
+}
+
+.switch {
+    display: inline-flex;
+    /* Змінено для кращого вирівнювання */
+    align-items: center;
+    /* Вирівнюємо текст вертикально */
+    position: relative;
+    width: 60px;
+    /* Фіксована ширина */
+    min-height: 34px;
+    /* Фіксована висота */
+    cursor: pointer;
+    flex-shrink: 0;
+    /* <<< ВАЖЛИВО: Заборона стискання */
+}
+
+.switch-input {
+    width: 0;
+    height: 0;
+    opacity: 0;
+}
+
+.switch-clider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    border-radius: 34px;
+    background-color: #5a5a5a;
+    /* Сірий для "вимкненого" стану в темній темі */
+    transition: 400ms;
+}
+
+.switch-clider::before {
+    content: '';
+    position: absolute;
+    cursor: pointer;
+    top: 4px;
+    left: 4px;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background-color: white;
+    transition: 400ms;
+}
+
+.switch-input:focus+.switch-clider {
+    box-shadow: 0 0 2px #888;
+    /* Тінь при фокусі для темної теми */
+}
+
+/* checked = true (темна тема активна) */
+.switch-input:checked+.switch-clider {
+    background-color: #4caf50;
+    /* Зелений - активний стан в темній темі */
+}
+
+/* Коли НЕ checked (світла тема активна) */
+.switch-input:not(:checked)+.switch-clider {
+    background-color: #5a5a5a;
+    /* Сірий - неактивний стан в темній темі */
+}
+
+/* --- Стилі перемикача для світлої теми (вище в блоці body.light-theme) --- */
+
+
+.switch-input:checked+.switch-clider::before {
+    transform: translateX(26px);
+    /* Рух повзунка вправо (темна тема активна) */
+}
+
+/* Коли НЕ checked (світла тема активна) */
+.switch-input:not(:checked)+.switch-clider::before {
+    transform: translateX(0px);
+    /* Повзунок зліва */
+}
+
+
+/* ---- Current Weather ---- */
+.current-weather {
+    display: flex;
+    gap: 30px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+    /* Для адаптивності */
+    animation: slideUp 0.6s ease-out;
+}
+
+.location-time,
+.weather-details {
+    background-color: var(--card-bg-dark);
+    /* Темна тема */
+    padding: var(--container-padding);
+    border-radius: var(--border-radius);
+    flex: 1;
+    /* Розтягуємо на доступну ширину */
+    min-width: 280px;
+    /* Мінімальна ширина блоку */
+    box-sizing: border-box;
+    /* Включаємо padding/border в розміри */
+}
+
+.location-time {
     text-align: center;
-    color: rgba(255, 255, 255, 0.8);
+}
+
+.location-time h1 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 2.5rem;
+    font-weight: bold;
+}
+
+.current-time {
+    display: block;
+    font-size: 4rem;
+    font-weight: lighter;
+    margin-bottom: 5px;
+    color: var(--text-color-dark);
+    /* Основний текст */
+}
+
+.current-date {
+    font-size: 1.1rem;
+    color: var(--text-muted-dark);
+    /* Приглушений текст */
+    margin: 0;
+}
+
+
+.weather-details {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    /* Дозволяє переносити елементи */
+}
+
+.temperature-info .main-temp {
+    font-size: 3.5rem;
+    font-weight: bold;
+    margin: 0;
+    line-height: 1;
+    color: var(--text-color-dark);
+    /* Основний текст */
+}
+
+.temperature-info .feels-like {
+    margin: 5px 0 15px 0;
+    color: var(--text-muted-dark);
+    /* Приглушений текст */
+}
+
+.sun-times p {
+    margin: 5px 0;
+    font-size: 0.9rem;
+    color: var(--text-muted-dark);
+    /* Приглушений текст */
+}
+
+.sun-times time {
+    font-weight: bold;
+    color: var(--text-color-dark);
+    /* Основний текст */
+}
+
+
+.weather-condition {
+    text-align: center;
+}
+
+.weather-condition .weather-icon {
+    font-size: 5rem;
+    /* Збільшуємо іконку погоди */
+    margin-bottom: 10px;
+    animation: pulse 2s infinite ease-in-out alternate;
+    /* Пульсація іконки */
+}
+
+.weather-condition .description {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin: 0;
+}
+
+.additional-info {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    /* Дві колонки */
+    gap: 15px 25px;
+    /* Відступи між рядками та колонками */
+    text-align: center;
+}
+
+.additional-info .info-item {
+    line-height: 1.2;
+}
+
+.additional-info .icon {
+    font-size: 1.5em;
+    /* Трохи більші іконки */
+    display: block;
+    margin-bottom: 5px;
+    color: var(--text-muted-dark);
+    /* Приглушений текст */
+}
+
+
+.additional-info p {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.additional-info small {
+    font-size: 0.8rem;
+    color: var(--text-muted-dark);
+    /* Приглушений текст */
+}
+
+
+/* Анімації */
+@keyframes slideUp {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes pulse {
+    from {
+        transform: scale(1);
+    }
+
+    to {
+        transform: scale(1.05);
+    }
+}
+
+
+/* ---- Forecast ---- */
+.forecast {
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+    /* Для адаптивності */
+    animation: slideUp 0.7s ease-out 0.2s;
+    /* З'являється трохи пізніше */
+    animation-fill-mode: backwards;
+    /* Починає анімацію з початкового стану */
+    /* align-items: stretch; - Повинно бути за замовчуванням */
+}
+
+.daily-forecast,
+.hourly-forecast {
+    background-color: var(--card-bg-dark);
+    /* Темна тема */
+    padding: var(--container-padding);
+    border-radius: var(--border-radius);
+    flex: 1;
+    /* Розтягуємо */
+    min-width: 280px;
+    /* Мінімальна ширина */
+    box-sizing: border-box;
+    /* Включаємо padding/border в розміри */
+}
+
+/* Стилі заголовків для обох блоків прогнозу */
+.daily-forecast h2,
+.hourly-forecast h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 1.3rem;
+    border-bottom: 1px solid #555;
+    /* Для темної теми */
+    padding-bottom: 10px;
+    color: var(--text-muted-dark);
+    /* Для темної теми */
+    flex-shrink: 0;
+    /* Важливо для flex-напрямку column у .hourly-forecast */
+}
+
+
+.daily-forecast ul {
+    list-style: none;
     padding: 0;
+    margin: 0;
 }
 
-/* Big Mobile Devices (min-width: 480px) */
-@media only screen and (min-width: 480px) {
-    .btn-location {
-        width: 80%;
-        /* Залишаємо ширину 80% для більшості мобільних */
-        height: 55px;
-        font-size: 20px;
+.daily-forecast li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #444;
+    /* Темна тема */
+    transition: background-color 0.3s;
+}
+
+.daily-forecast li:last-child {
+    border-bottom: none;
+}
+
+.daily-forecast li:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+    /* Темна тема */
+}
+
+.daily-forecast .icon {
+    font-size: 1.5em;
+    flex-basis: 30px;
+    /* Фіксована ширина для іконки */
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.daily-forecast .temp {
+    font-weight: bold;
+    flex-basis: 60px;
+    /* Ширина для температури */
+    text-align: right;
+    flex-shrink: 0;
+}
+
+.daily-forecast .day {
+    flex-grow: 1;
+    /* Займає решту місця */
+    text-align: right;
+    color: var(--text-muted-dark);
+    /* Темна тема */
+    font-size: 0.9rem;
+    margin-left: 10px;
+    /* Додамо відступ */
+}
+
+/* Виправлення для .hourly-forecast */
+.hourly-forecast {
+    display: flex;
+    /* <<< ВАЖЛИВО */
+    flex-direction: column;
+    /* <<< ВАЖЛИВО: Внутрішні елементи в колонку */
+    /* Висота буде визначена align-items: stretch батьківського .forecast */
+}
+
+.hourly-cards {
+    display: flex;
+    gap: 15px;
+    overflow-x: auto;
+    /* Дозволяє горизонтальну прокрутку */
+    padding-bottom: 10px;
+    /* Щоб тінь скролбара не обрізалась */
+    flex-grow: 1;
+    /* <<< ВАЖЛИВО: Займає весь доступний простір по висоті */
+    min-height: 100px;
+    /* Додамо мінімальну висоту для карток */
+}
+
+/* Стилізація скролбара (для Webkit браузерів) */
+.hourly-cards::-webkit-scrollbar {
+    height: 8px;
+}
+
+.hourly-cards::-webkit-scrollbar-track {
+    background: #444;
+    border-radius: 4px;
+}
+
+.hourly-cards::-webkit-scrollbar-thumb {
+    background: #666;
+    border-radius: 4px;
+}
+
+.hourly-cards::-webkit-scrollbar-thumb:hover {
+    background: #888;
+}
+
+/* Для Firefox */
+.hourly-cards {
+    scrollbar-width: thin;
+    scrollbar-color: #666 #444;
+}
+
+
+.hour-card {
+    background-color: #444;
+    /* Трохи світліший фон для карток (Темна тема) */
+    padding: 15px;
+    border-radius: var(--border-radius);
+    text-align: center;
+    min-width: 100px;
+    /* Мінімальна ширина картки */
+    transition: transform 0.3s, box-shadow 0.3s;
+    display: flex;
+    /* Для кращого контролю вмісту картки */
+    flex-direction: column;
+    justify-content: space-between;
+    /* Розподіл простору */
+    flex-shrink: 0;
+    /* Не стискати картки */
+}
+
+.hour-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+
+.hour-card time {
+    font-size: 0.9rem;
+    display: block;
+    margin-bottom: 10px;
+    color: var(--text-muted-dark);
+    /* Темна тема */
+}
+
+
+.hour-card .icon {
+    font-size: 2rem;
+    display: block;
+    margin: 5px 0 10px 0;
+    /* Відступи */
+    flex-grow: 1;
+    /* Дозволяє іконці зайняти місце */
+}
+
+.hour-card .temp {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin: 0 0 5px 0;
+}
+
+.hour-card .wind {
+    font-size: 0.8rem;
+    color: var(--text-muted-dark);
+    /* Темна тема */
+    margin: 0;
+}
+
+
+/* ---- Адаптивність ---- */
+@media (max-width: 992px) {
+
+    .current-weather,
+    .forecast {
+        flex-direction: column;
+        /* Секції одна під одною */
+    }
+
+    .weather-details {
+        justify-content: space-around;
+        /* Краще розподілення на менших екранах */
+    }
+
+    /* Висота блоків прогнозу буде залежати від контенту */
+    .hourly-forecast {
+        min-height: 250px;
+        /* Приблизна мінімальна висота в колонці */
     }
 }
 
-/* Tablet Devices (min-width: 768px) */
-@media only screen and (min-width: 768px) {
-    .btn-location {
-        width: 70%;
-        height: 60px;
-        font-size: 22px;
-        /* Повертаємо стандартний розмір шрифту */
+@media (max-width: 768px) {
+    .controls {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 15px;
+    }
+
+    .container-slider {
+        align-self: center;
+        /* <<< ВАЖЛИВО: Центруємо слайдер */
+        order: -1;
+        /* width: fit-content; - ВИДАЛЕНО */
+    }
+
+    .search-bar {
+        width: 100%;
+    }
+
+    .current-location-btn {
+        justify-content: center;
+    }
+
+    .weather-details {
+        flex-direction: column;
+        /* Всі деталі погоди в стовпчик */
+        align-items: center;
+        /* Центрувати все */
+        text-align: center;
+    }
+
+    .additional-info {
+        grid-template-columns: repeat(2, 1fr);
+        /* Залишаємо дві колонки */
+        width: 100%;
+        max-width: 300px;
+        margin-top: 20px;
+    }
+
+    h1 {
+        font-size: 2rem;
+    }
+
+    .current-time {
+        font-size: 3rem;
+    }
+
+    .main-temp {
+        font-size: 3rem;
+    }
+
+    .weather-condition .weather-icon {
+        font-size: 4rem;
+    }
+
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 10px;
+        /* Менші відступи на мобільних */
+    }
+
+    .container {
+        padding: 0 10px;
+    }
+
+    .location-time,
+    .weather-details,
+    .daily-forecast,
+    .hourly-forecast {
+        padding: 15px;
+    }
+
+    h1 {
+        font-size: 1.8rem;
+    }
+
+    .current-time {
+        font-size: 2.5rem;
+    }
+
+    .main-temp {
+        font-size: 2.5rem;
+    }
+
+    .additional-info {
+        gap: 10px 15px;
+        /* Менші відступи */
+    }
+
+    .additional-info .icon {
+        font-size: 1.3em;
+    }
+
+    .additional-info p {
+        font-size: 0.9rem;
+    }
+
+    .additional-info small {
+        font-size: 0.7rem;
+    }
+
+    .hour-card {
+        min-width: 90px;
+        /* Ще вужчі картки */
+        padding: 10px;
+    }
+
+    .hour-card .icon {
+        font-size: 1.8rem;
+    }
+
+    .hour-card .temp {
+        font-size: 1.1rem;
     }
 }
 
-/* Big Tablet Devices (min-width: 1024px) */
-@media only screen and (min-width: 1024px) {
-    .btn-location {
-        width: 60%;
-        height: 62px;
-        font-size: 22px;
-    }
+.search-form {
+    flex-grow: 1;
+    position: relative;
+    /* Необхідно для абсолютного позиціонування кнопки */
+    display: flex;
+    /* Додатково для можливого вирівнювання, хоча іконка/кнопка позиціоновані абсолютно */
+    align-items: center;
+}
+.search-form .search-icon {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted-dark);
+    z-index: 1;
+    /* Переконатися, що іконка над полем вводу, якщо потрібно */
+    pointer-events: none;
+    /* Щоб не заважала кліку на інпут */
 }
 
-/* Small Desktop Devices (min-width: 1280px) */
-@media only screen and (min-width: 1280px) {
-    .btn-location {
-        width: 300px;
-        /* Фіксована ширина */
-        height: 62px;
-        font-size: 24px;
-    }
+.search-form input {
+    width: 100%;
+    /* Збільшуємо правий padding, щоб текст не заходив під кнопку */
+    padding: 10px 45px 10px 40px;
+    /* Наприклад: top right bottom left */
+    border-radius: 20px;
+    border: none;
+    background-color: var(--card-bg-dark);
+    color: var(--text-color-dark);
+    font-size: 1rem;
+    box-sizing: border-box;
 }
 
-/* Desktop Devices (min-width: 1440px) */
-@media only screen and (min-width: 1440px) {
-    .btn-location {
-        width: 292px;
-        /* Оригінальна ширина */
-        height: 62px;
-        font-size: 22px;
-    }
+.search-form input::placeholder {
+    color: var(--text-muted-dark);
 }
 
-/* #endregion BUTTON */
+/* Стилі для нової кнопки відправки */
+.search-submit-btn {
+    position: absolute;
+    right: 5px;
+    /* Відступ справа всередині поля */
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--text-muted-dark);
+    /* Колір іконки/символу */
+    font-size: 1.2rem;
+    /* Розмір іконки/символу */
+    padding: 5px 8px;
+    /* Невеликі відступи для зручності натискання */
+    cursor: pointer;
+    line-height: 1;
+    /* Для кращого вертикального вирівнювання символу */
+    transition: color 0.3s;
+}
+
+.search-submit-btn:hover,
+.search-submit-btn:focus {
+    color: var(--text-color-dark);
+    /* Зміна кольору при наведенні/фокусі */
+    outline: none;
+    /* Прибираємо стандартний контур фокусу */
+}
+
+/* --- Стилі для світлої теми --- */
+
+body.light-theme .search-form input {
+    background-color: var(--card-bg-light);
+    color: var(--text-color-light);
+    border: 1px solid #e0e0e0;
+}
+
+body.light-theme .search-form input::placeholder {
+    color: var(--text-muted-light);
+}
+
+body.light-theme .search-form .search-icon {
+    color: var(--text-muted-light);
+}
+
+body.light-theme .search-submit-btn {
+    color: var(--text-muted-light);
+}
+
+body.light-theme .search-submit-btn:hover,
+body.light-theme .search-submit-btn:focus {
+    color: var(--text-color-light);
+}
