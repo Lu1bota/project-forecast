@@ -5,14 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Прогноз Погоди</title>
     <script type="module" crossorigin src="/project-forecast/index.js"></script>
-    <link rel="stylesheet" crossorigin href="/project-forecast/assets/index-C9KKjo2q.css">
+    <link rel="stylesheet" crossorigin href="/project-forecast/assets/index-ClO2xmPK.css">
   </head>
   <body class="dark-theme">
     <header class="site-header container">
       <div class="controls">
         <div class="container-slider">
           <label class="switch">
-            <input type="checkbox" class="switch-input" checked />
+            <input type="checkbox" class="switch-input" />
             <span class="switch-clider"></span>
             <span class="visually-hidden">Перемикач темної/світлої теми</span>
           </label>
@@ -56,7 +56,12 @@
             </div>
           </div>
           <div class="weather-condition">
-            <div class="weather-icon">☀️</div>
+            <div class="weather-icon">
+              <!-- <img
+                src="https://openweathermap.org/img/wn/04d@2x.png"
+                alt="Weather icon"
+              />-->☀️
+            </div>
             <p class="description">Сонячно</p>
           </div>
           <div class="additional-info">
@@ -76,9 +81,9 @@
               <small>Тиск</small>
             </div>
             <div class="info-item">
-              <span class="icon">🔆</span>
+              <span class="icon">☁️</span>
               <p class="ultraviolet">8</p>
-              <small>УФ-індекс</small>
+              <small>Хмарність</small>
             </div>
           </div>
         </div>
@@ -87,30 +92,31 @@
       <section class="forecast">
         <div class="daily-forecast">
           <h2>Прогноз на 5 днів:</h2>
-          <ul>
+          <ul class="list-forecast-5days">
             <li>
-              <span class="icon">⛅</span> <span class="temp">20°C</span>
-              <span class="day">П'ятниця, 1 Вер</span>
+              <span class="icon icon-day-1">⛅</span>
+              <span class="temp temp-day-1">20°C</span>
+              <span class="day day-1">П'ятниця, 1 Вер</span>
             </li>
             <li>
-              <span class="icon">🌤️</span>
-              <span class="temp">22°C</span>
-              <span class="day">Субота, 2 Вер</span>
+              <span class="icon icon-day-2">🌤️</span>
+              <span class="temp temp-day-2">22°C</span>
+              <span class="day day-2">Субота, 2 Вер</span>
             </li>
             <li>
-              <span class="icon">☀️</span>
-              <span class="temp">27°C</span>
-              <span class="day">Неділя, 3 Вер</span>
+              <span class="icon icon-day-3">☀️</span>
+              <span class="temp temp-day-3">27°C</span>
+              <span class="day day-3">Неділя, 3 Вер</span>
             </li>
             <li>
-              <span class="icon">🌦️</span>
-              <span class="temp">18°C</span>
-              <span class="day">Понеділок, 4 Вер</span>
+              <span class="icon icon-day-4">🌦️</span>
+              <span class="temp temp-day-4">18°C</span>
+              <span class="day day-4">Понеділок, 4 Вер</span>
             </li>
             <li>
-              <span class="icon">🌧️</span>
-              <span class="temp">16°C</span>
-              <span class="day">Вівторок, 5 Вер</span>
+              <span class="icon icon-day-5">🌧️</span>
+              <span class="temp temp-day-5">16°C</span>
+              <span class="day day-5">Вівторок, 5 Вер</span>
             </li>
           </ul>
         </div>
