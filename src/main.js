@@ -54,7 +54,7 @@ function getCoordinates() {
 
 function getWeather(options) {
   return fetch(
-    `https://api.openweathermap.org/data/2.5/weather?lat=${options.lat}&lon=${options.lon}&appid=${API_KEY}&lang=${options.lang}&units=${options.units}`
+    `https://api.openweathermap.org/data/2.5/forecast?lat=${options.lat}&lon=${options.lon}&appid=${API_KEY}&lang=${options.lang}&units=${options.units}`
   ).then(response => {
     if (!response.ok) {
       throw new Error(response.status);
@@ -77,18 +77,40 @@ function initElements(obj) {
   const pPressure = document.querySelector('.pressure');
   const pUltraviolet = document.querySelector('.ultraviolet');
 
-  pTemp.textContent = `${roundNum(obj.main.temp)}°C`;
-  pFeelsLike.textContent = `${roundNum(obj.main.feels_like)}`;
+  const iconDay1 = document.querySelector('.icon-day-1');
+  const tempDay1 = document.querySelector('.temp-day-1');
+  const day1 = document.querySelector('.day-1');
+
+  const iconDay2 = document.querySelector('.icon-day-2');
+  const tempDay2 = document.querySelector('.temp-day-2');
+  const day2 = document.querySelector('.day-2');
+
+  const iconDay3 = document.querySelector('.icon-day-3');
+  const tempDay3 = document.querySelector('.temp-day-3');
+  const day3 = document.querySelector('.day-3');
+
+  const iconDay4 = document.querySelector('.icon-day-4');
+  const tempDay4 = document.querySelector('.temp-day-4');
+  const day4 = document.querySelector('.day-4');
+
+  const iconDay5 = document.querySelector('.icon-day-5');
+  const tempDay5 = document.querySelector('.temp-day-5');
+  const day5 = document.querySelector('.day-5');
+
+  pTemp.textContent = `${roundNum(obj.list[0].main.temp)}°C`;
+  pFeelsLike.textContent = `${roundNum(obj.list[0].main.feels_like)}`;
   timeUp.textContent = `${timeUpSun(obj)}`;
   timeDown.textContent = `${timeDownSun(obj)}`;
 
-  contWeathIcon.textContent = `${obj.weather[0].icon}`;
-  pDesc.textContent = `${obj.weather[0].main}`;
+  contWeathIcon.innerHTML = `
+  <img src="https://openweathermap.org/img/wn/${obj.list[0].weather[0].icon}@2x.png" alt="Weather icon"/>
+  `;
+  pDesc.textContent = `${obj.list[0].weather[0].description}`;
 
-  pHumidity.textContent = `${obj.main.humidity}%`;
-  pWind.textContent = `${roundNum(obj.wind.speed)} км/г`;
-  pPressure.textContent = `${obj.main.pressure}`;
-  pUltraviolet.textContent = `${obj.clouds.all} %`;
+  pHumidity.textContent = `${obj.list[0].main.humidity} %`;
+  pWind.textContent = `${roundNum(obj.list[0].wind.speed)} км/г`;
+  pPressure.textContent = `${obj.list[0].main.pressure}`;
+  pUltraviolet.textContent = `${obj.list[0].clouds.all} %`;
 }
 
 function roundNum(num) {
@@ -96,7 +118,7 @@ function roundNum(num) {
 }
 
 function timeUpSun(obj) {
-  const timestampInSeconds = obj.sys.sunrise;
+  const timestampInSeconds = obj.city.sunrise;
 
   const timestampInMilliseconds = timestampInSeconds * 1000;
 
@@ -112,7 +134,7 @@ function timeUpSun(obj) {
 }
 
 function timeDownSun(obj) {
-  const timestampInSeconds = obj.sys.sunset;
+  const timestampInSeconds = obj.city.sunset;
 
   const timestampInMilliseconds = timestampInSeconds * 1000;
 
@@ -126,47 +148,3 @@ function timeDownSun(obj) {
   const formattedTime = `${formattedHours}:${formattedMinutes}`;
   return formattedTime;
 }
-
-// const coordinatesOptions = {
-//   city: 'Старий Мерчик',
-//   limit: 5,
-// };
-
-// fetch(
-//   `http://api.openweathermap.org/geo/1.0/direct?q=${coordinatesOptions.city}&limit=${coordinatesOptions.limit}&appid=${API_KEY}`
-// )
-//   .then(response => {
-//     if (!response.ok) {
-//       throw new Error(response.status);
-//     }
-//     return response.json();
-//   })
-//   .then(data => {
-//     const options = {
-//       lat: data[0].lat,
-//       lon: data[0].lon,
-//       lang: 'ua, uk',
-//       units: 'metric',
-//     };
-//     console.log(data);
-//     console.log(data[0].lat);
-//     console.log(data[0].lon);
-
-//     getCoordinates(options)
-//       .then(data => {
-//         console.log(data);
-//       })
-//       .catch(error => console.log(error));
-//   })
-//   .catch(error => console.log(error));
-
-// function getCoordinates(options) {
-//   return fetch(
-//     `https://api.openweathermap.org/data/2.5/weather?lat=${options.lat}&lon=${options.lon}&appid=${API_KEY}&lang=${options.lang}&units=${options.units}`
-//   ).then(response => {
-//     if (!response.ok) {
-//       throw new Error(response.status);
-//     }
-//     return response.json();
-//   });
-// }
