@@ -411,7 +411,7 @@ main.container {
 
 .weather-details {
     display: flex;
-    justify-content: space-between;
+    /* justify-content: space-between; */
     align-items: center;
     gap: 20px;
     flex-wrap: wrap;
@@ -443,6 +443,13 @@ main.container {
 
 .weather-condition {
     text-align: center;
+    margin-left: 50px;
+}
+
+@media screen and (max-width: 768px) {
+    .weather-condition {
+        margin-left: 0;
+    }
 }
 
 .weather-condition .weather-icon {
