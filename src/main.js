@@ -22,7 +22,7 @@ function getCoordinates() {
     limit: 1,
   };
   fetch(
-    `http://api.openweathermap.org/geo/1.0/direct?q=${coordinatesOptions.city}&limit=${coordinatesOptions.limit}&appid=${API_KEY}`
+    `https://api.openweathermap.org/geo/1.0/direct?q=${coordinatesOptions.city}&limit=${coordinatesOptions.limit}&appid=${API_KEY}`
   )
     .then(response => {
       if (!response.ok) {
