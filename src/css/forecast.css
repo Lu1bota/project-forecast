@@ -39,6 +39,18 @@ body {
     /* Запобігає горизонтальному скролу */
     transition: background-color 0.4s, color 0.4s;
     animation: fadeIn 0.8s ease-in-out;
+    background: rgb(240, 231, 231);
+    background: linear-gradient(90deg, rgba(240, 231, 231, 1) 51%, rgba(43, 105, 104, 1) 100%, rgba(40, 35, 35, 1) 100%);
+}
+
+body {
+    background-color: #fff;
+    /* Або інший світлий колір */
+    color: var(--card-bg-dark);
+}
+
+body.change-color {
+    color: #111 !important;
 }
 
 /* Темна тема */
@@ -648,6 +660,18 @@ main.container {
     min-height: 150px;
     scrollbar-width: thin;
     scrollbar-color: #666 #444;
+
+    display: flex;
+        /* Розміщуємо картки в ряд */
+        overflow-x: auto;
+        /* Додаємо горизонтальну прокрутку при переповненні */
+        gap: 15px;
+        /* Проміжок між картками (налаштуйте за смаком) */
+        padding: 10px 5px;
+        /* Невеликі відступи зверху/знизу та з боків контейнера */
+    
+        /* Покращення прокрутки на сенсорних пристроях */
+        -webkit-overflow-scrolling: touch;
 }
 
 .hourly-cards::-webkit-scrollbar {
@@ -679,6 +703,21 @@ main.container {
     flex-direction: column;
     justify-content: space-between;
     flex-shrink: 0;
+
+    flex: 0 0 auto;
+        /* Забороняємо карткам стискатися, зберігаємо їх базовий розмір */
+        min-width: 90px;
+        /* Мінімальна ширина картки (налаштуйте за потребою) */
+        /* Тут ваші стилі для карток: фон, рамки, відступи всередині тощо */
+        /* background-color: #f0f0f0; */
+        /* Приклад фону */
+        border-radius: 8px;
+        /* Приклад заокруглення */
+        padding: 10px;
+        /* Внутрішні відступи */
+        text-align: center;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        /* Приклад тіні */
 }
 
 .hour-card:hover {
@@ -914,4 +953,39 @@ main.container {
 
     /* Менша кнопка */
 
+}
+
+.search-form input,
+.location-time,
+.weather-details,
+.daily-forecast,
+.hourly-forecast {
+    background-color: #bbb;
+    border: 1px solid #aaa;
+    /* Приклад */
+}
+
+.hour-card {
+    background-color: #aaa;
+}
+
+/* Стилі для темної теми (коли body має клас .change) */
+body.change {
+    background-color: #222;
+    /* Або інший темний колір */
+    color: #eee;
+}
+
+body.change .search-form input,
+body.change .location-time,
+body.change .weather-details,
+body.change .daily-forecast,
+body.change .hourly-forecast {
+    background-color: #444;
+    border-color: #555;
+    /* Приклад */
+}
+
+body.change .hour-card {
+    background-color: #555;
 }

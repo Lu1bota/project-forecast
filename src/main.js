@@ -1,5 +1,6 @@
 import './js/slider';
-import axios from 'axios';
+import iziToast from 'izitoast';
+import 'izitoast/dist/css/iziToast.min.css';
 
 const API_KEY = '7a2dfcb51e1141c71771f685e7f4e2df';
 
@@ -7,13 +8,95 @@ const form = document.querySelector('.search-form');
 const btnCurrentLoc = document.querySelector('.current-location-btn');
 const input = form.querySelector('input');
 const contWeatherDetails = document.querySelector('.weather-details');
+const contLocationTime = document.querySelector('.location-time');
+
+document.addEventListener('DOMContentLoaded', askForLocation);
+clock_2();
+dateNow();
+
+function askForLocation() {
+  if ('geolocation' in navigator) {
+    navigator.geolocation.getCurrentPosition(geoSuccess, geoError);
+  } else {
+    geoError(error);
+    iziToast.error({
+      title: 'Помилка!',
+      message: 'Геолокація не підтримується вашим браузером.',
+      position: 'topRight',
+    });
+  }
+}
+
+function geoSuccess(position) {
+  console.log(position);
+  const lat = position.coords.latitude;
+  const lon = position.coords.longitude;
+
+  const options = {
+    lat,
+    lon,
+    lang: 'ua, uk',
+    units: 'metric',
+  };
+
+  getWeather(options)
+    .then(data => {
+      console.log(data);
+      contLocationTime.querySelector('h1').textContent = data.city.name;
+      initElements(data);
+    })
+    .catch(error => {
+      iziToast.error({
+        title: 'Error!',
+        message: `${error.message}`,
+        position: 'topRight',
+      });
+    });
+}
+
+function geoError(error) {
+  iziToast.error({
+    title: 'Error!',
+    message: `${error.message}`,
+    position: 'topRight',
+  });
+  let message = 'Не вдалося визначити місцезнаходження.';
+  switch (error.code) {
+    case error.PERMISSION_DENIED:
+      message = 'Ви заборонили доступ до свого місцезнаходження';
+      iziToast.error({
+        title: 'Error!',
+        message: message,
+        position: 'topRight',
+      });
+      break;
+    case error.POSITION_UNAVAILABLE:
+      message = 'Інформація про місцезнаходження недоступна.';
+      iziToast.error({
+        title: 'Error!',
+        message: message,
+        position: 'topRight',
+      });
+      break;
+    case error.TIMEOUT:
+      message = 'Час очікування запиту на місцезнаходження вичерпано.';
+      iziToast.error({
+        title: 'Error!',
+        message: message,
+        position: 'topRight',
+      });
+      break;
+  }
+}
 
 form.addEventListener('submit', handleSubmit);
+btnCurrentLoc.addEventListener('click', askForLocation);
 
 function handleSubmit(event) {
   event.preventDefault();
   getCoordinates();
   console.log(contWeatherDetails);
+  form.reset();
 }
 
 function getCoordinates() {
@@ -32,6 +115,7 @@ function getCoordinates() {
     })
     .then(res => {
       console.log(res[0]);
+      contLocationTime.querySelector('h1').textContent = res[0].local_names.uk;
 
       const options = {
         lat: res[0].lat,
@@ -77,26 +161,6 @@ function initElements(obj) {
   const pPressure = document.querySelector('.pressure');
   const pUltraviolet = document.querySelector('.ultraviolet');
 
-  const iconDay1 = document.querySelector('.icon-day-1');
-  const tempDay1 = document.querySelector('.temp-day-1');
-  const day1 = document.querySelector('.day-1');
-
-  const iconDay2 = document.querySelector('.icon-day-2');
-  const tempDay2 = document.querySelector('.temp-day-2');
-  const day2 = document.querySelector('.day-2');
-
-  const iconDay3 = document.querySelector('.icon-day-3');
-  const tempDay3 = document.querySelector('.temp-day-3');
-  const day3 = document.querySelector('.day-3');
-
-  const iconDay4 = document.querySelector('.icon-day-4');
-  const tempDay4 = document.querySelector('.temp-day-4');
-  const day4 = document.querySelector('.day-4');
-
-  const iconDay5 = document.querySelector('.icon-day-5');
-  const tempDay5 = document.querySelector('.temp-day-5');
-  const day5 = document.querySelector('.day-5');
-
   pTemp.textContent = `${roundNum(obj.list[0].main.temp)}°C`;
   pFeelsLike.textContent = `${roundNum(obj.list[0].main.feels_like)}`;
   timeUp.textContent = `${timeUpSun(obj)}`;
@@ -111,6 +175,86 @@ function initElements(obj) {
   pWind.textContent = `${roundNum(obj.list[0].wind.speed)} км/г`;
   pPressure.textContent = `${obj.list[0].main.pressure}`;
   pUltraviolet.textContent = `${obj.list[0].clouds.all} %`;
+
+  const dailyForecasts = [];
+  const processedDates = new Set();
+
+  for (const forecast of obj.list) {
+    const forecastDate = new Date(forecast.dt * 1000);
+    const dateString = forecastDate.toLocaleDateString();
+
+    if (
+      !processedDates.has(dateString) &&
+      forecastDate.getHours() >= 14 &&
+      forecastDate.getHours() < 17 &&
+      dailyForecasts.length < 5
+    ) {
+      dailyForecasts.push({
+        date: forecastDate,
+        temp: forecast.main.temp,
+        icon: forecast.weather[0].icon,
+      });
+      processedDates.add(dateString);
+    }
+  }
+
+  const forecastListItems = document.querySelectorAll(
+    '.list-forecast-5days li'
+  );
+
+  forecastListItems.forEach((li, index) => {
+    if (dailyForecasts[index]) {
+      const dayData = dailyForecasts[index];
+      const iconElement = li.querySelector('.icon');
+      const tempElement = li.querySelector('.temp');
+      const dayElement = li.querySelector('.day');
+
+      if (iconElement) {
+        iconElement.innerHTML = `<img src="https://openweathermap.org/img/wn/${dayData.icon}.png" alt="Weather icon"/>`;
+      }
+      if (tempElement) {
+        tempElement.textContent = `${roundNum(dayData.temp)}°C`;
+      }
+      if (dayElement) {
+        dayElement.textContent = dayData.date.toLocaleDateString('uk-UA', {
+          weekday: 'short',
+          day: 'numeric',
+          month: 'long',
+        });
+      }
+    } else {
+      li.style.display = 'none';
+    }
+  });
+
+  const hourlyCards = document.querySelectorAll('.hourly-cards .hour-card');
+  const hourlyForecasts = obj.list.slice(0, hourlyCards.length);
+
+  hourlyCards.forEach((card, index) => {
+    if (hourlyForecasts[index]) {
+      const hourData = hourlyForecasts[index];
+      const timeElement = card.querySelector('time');
+      const iconElement = card.querySelector('.icon');
+      const tempElement = card.querySelector('.temp');
+      const windElement = card.querySelector('.wind');
+
+      const forecastDate = new Date(hourData.dt * 1000);
+
+      if (timeElement)
+        timeElement.textContent = forecastDate.toLocaleTimeString('uk-UA', {
+          hour: '2-digit',
+          minute: '2-digit',
+        });
+      if (iconElement)
+        iconElement.innerHTML = `<img src="https://openweathermap.org/img/wn/${hourData.weather[0].icon}.png" alt="Weather icon"/>`;
+      if (tempElement)
+        tempElement.textContent = `${roundNum(hourData.main.temp)}°C`;
+      if (windElement)
+        windElement.textContent = `${roundNum(hourData.wind.speed)} км/г`;
+    } else {
+      card.style.display = 'none';
+    }
+  });
 }
 
 function roundNum(num) {
@@ -147,4 +291,31 @@ function timeDownSun(obj) {
 
   const formattedTime = `${formattedHours}:${formattedMinutes}`;
   return formattedTime;
+}
+
+function clock_2() {
+  const date = new Date();
+  const hours = date.getHours();
+  var minutes = date.getMinutes();
+  // var seconds = date.getSeconds();
+
+  if (hours < 10) hours = '0' + hours;
+  if (minutes < 10) minutes = '0' + minutes;
+  // if (seconds < 10) seconds = '0' + seconds;
+
+  const str = hours + ':' + minutes;
+  //  +':' + seconds;
+
+  contLocationTime.querySelector('.current-time').innerHTML = str;
+  setTimeout(clock_2, 1000);
+}
+
+function dateNow() {
+  const currentDate = new Date();
+  const formattedDate = currentDate.toLocaleDateString('uk-UA', {
+    weekday: 'long',
+    day: 'numeric',
+    month: 'short',
+  });
+  contLocationTime.querySelector('.current-date').textContent = formattedDate;
 }
