@@ -54,40 +54,9 @@ body.light-theme .hour-card {
     border: 1px solid #e0e0e0;
 }
 
-body.light-theme .search-form input::placeholder {}
-
-body.light-theme h1,
-body.light-theme h2 {}
-
-body.light-theme p,
-body.light-theme time,
-body.light-theme small,
-body.light-theme span.temp,
-body.light-theme span.day,
-body.light-theme li {}
-
-body.light-theme .current-time,
-body.light-theme .main-temp {}
-
-body.light-theme .current-date,
-body.light-theme .feels-like,
-body.light-theme .sun-times p,
-body.light-theme .additional-info .icon,
-body.light-theme .additional-info small,
-body.light-theme .daily-forecast .day,
-body.light-theme .hour-card time,
-body.light-theme .hour-card .wind,
-body.light-theme .search-form .search-icon,
-body.light-theme .search-form .search-submit-btn {}
-
-body.light-theme .sun-times time {}
-
 body.light-theme .current-location-btn {
     background-color: var(--accent-color-light);
 }
-
-body.light-theme .search-form .search-submit-btn:hover,
-body.light-theme .search-form .search-submit-btn:focus {}
 
 body.light-theme .hourly-forecast h2,
 body.light-theme .daily-forecast h2 {
@@ -113,8 +82,6 @@ body.light-theme .switch-clider {
 body.light-theme .switch-input:checked+.switch-clider {
     background-color: #5a5a5a;
 }
-
-body.light-theme .switch-input:not(:checked)+.switch-clider {}
 
 body.light-theme .switch-input:focus+.switch-clider {
     box-shadow: 0 0 2px #6bbaff;
@@ -705,12 +672,6 @@ main.container {
         margin-top: 20px;
         gap: 15px 20px;
     }
-
-    h1 {}
-
-    .current-time {}
-
-    .main-temp {}
 
     .weather-condition .weather-icon {
         font-size: 4rem;

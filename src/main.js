@@ -292,14 +292,14 @@ function timeDownSun(obj) {
 }
 
 function clock_2() {
-  const date = new Date();
-  const hours = date.getHours();
-  var minutes = date.getMinutes();
+  let date = new Date();
+  let hours = date.getHours();
+  let minutes = date.getMinutes();
 
   if (hours < 10) hours = '0' + hours;
   if (minutes < 10) minutes = '0' + minutes;
 
-  const str = hours + ':' + minutes;
+  let str = hours + ':' + minutes;
 
   contLocationTime.querySelector('.current-time').innerHTML = str;
   setTimeout(clock_2, 1000);
