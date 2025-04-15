@@ -7,12 +7,13 @@ const API_KEY = '7a2dfcb51e1141c71771f685e7f4e2df';
 const form = document.querySelector('.search-form');
 const btnCurrentLoc = document.querySelector('.current-location-btn');
 const input = form.querySelector('input');
-const contWeatherDetails = document.querySelector('.weather-details');
 const contLocationTime = document.querySelector('.location-time');
 
-document.addEventListener('DOMContentLoaded', askForLocation);
 clock_2();
 dateNow();
+document.addEventListener('DOMContentLoaded', askForLocation);
+form.addEventListener('submit', handleSubmit);
+btnCurrentLoc.addEventListener('click', askForLocation);
 
 function askForLocation() {
   if ('geolocation' in navigator) {
@@ -28,7 +29,6 @@ function askForLocation() {
 }
 
 function geoSuccess(position) {
-  console.log(position);
   const lat = position.coords.latitude;
   const lon = position.coords.longitude;
 
@@ -41,7 +41,6 @@ function geoSuccess(position) {
 
   getWeather(options)
     .then(data => {
-      console.log(data);
       contLocationTime.querySelector('h1').textContent = data.city.name;
       initElements(data);
     })
@@ -55,11 +54,6 @@ function geoSuccess(position) {
 }
 
 function geoError(error) {
-  iziToast.error({
-    title: 'Error!',
-    message: `${error.message}`,
-    position: 'topRight',
-  });
   let message = 'Не вдалося визначити місцезнаходження.';
   switch (error.code) {
     case error.PERMISSION_DENIED:
@@ -89,13 +83,9 @@ function geoError(error) {
   }
 }
 
-form.addEventListener('submit', handleSubmit);
-btnCurrentLoc.addEventListener('click', askForLocation);
-
 function handleSubmit(event) {
   event.preventDefault();
   getCoordinates();
-  console.log(contWeatherDetails);
   form.reset();
 }
 
@@ -114,7 +104,6 @@ function getCoordinates() {
       return response.json();
     })
     .then(res => {
-      console.log(res[0]);
       contLocationTime.querySelector('h1').textContent = res[0].local_names.uk;
 
       const options = {
@@ -123,17 +112,26 @@ function getCoordinates() {
         lang: 'ua, uk',
         units: 'metric',
       };
-      console.log(res[0].lat);
-      console.log(res[0].lon);
 
       getWeather(options)
         .then(data => {
-          console.log(data);
           initElements(data);
         })
-        .catch(error => console.log(error));
+        .catch(error => {
+          iziToast.error({
+            title: 'Error!',
+            message: error.message,
+            position: 'topRight',
+          });
+        });
     })
-    .catch(error => console.log(error));
+    .catch(error => {
+      iziToast.error({
+        title: 'Error!',
+        message: error.message,
+        position: 'topRight',
+      });
+    });
 }
 
 function getWeather(options) {
@@ -297,14 +295,11 @@ function clock_2() {
   const date = new Date();
   const hours = date.getHours();
   var minutes = date.getMinutes();
-  // var seconds = date.getSeconds();
 
   if (hours < 10) hours = '0' + hours;
   if (minutes < 10) minutes = '0' + minutes;
-  // if (seconds < 10) seconds = '0' + seconds;
 
   const str = hours + ':' + minutes;
-  //  +':' + seconds;
 
   contLocationTime.querySelector('.current-time').innerHTML = str;
   setTimeout(clock_2, 1000);

@@ -1,25 +1,20 @@
-/* Загальні стилі та змінні */
 :root {
     --bg-color-dark: #212121;
     --card-bg-dark: #333;
     --text-color-dark: #ffffff;
     --text-muted-dark: #b0b0b0;
     --accent-color-dark: #4caf50;
-    /* Зелений для кнопки */
     --border-radius: 15px;
     --container-padding: 20px;
     --icon-size: 2em;
 
-    /* Змінні для світлої теми */
     --bg-color-light: #f0f0f0;
     --card-bg-light: #ffffff;
     --text-color-light: #333333;
     --text-muted-light: #757575;
     --accent-color-light: #2196f3;
-    /* Синій для кнопки */
 }
 
-/* ---- Глобальний Box Sizing ---- */
 html {
     box-sizing: border-box;
     scroll-behavior: smooth;
@@ -36,70 +31,43 @@ body {
     margin: 0;
     min-height: 100vh;
     overflow-x: hidden;
-    /* Запобігає горизонтальному скролу */
     transition: background-color 0.4s, color 0.4s;
     animation: fadeIn 0.8s ease-in-out;
-    background: rgb(240, 231, 231);
-    background: linear-gradient(90deg, rgba(240, 231, 231, 1) 51%, rgba(43, 105, 104, 1) 100%, rgba(40, 35, 35, 1) 100%);
-}
-
-body {
-    background-color: #fff;
-    /* Або інший світлий колір */
     color: var(--card-bg-dark);
 }
 
-body.change-color {
-    color: #111 !important;
-}
-
-/* Темна тема */
 body.dark-theme {
     background-color: var(--bg-color-dark);
     color: var(--text-color-dark);
 }
 
-/* Світла тема */
 body.light-theme {
     background-color: var(--bg-color-light);
     color: var(--text-color-light);
 }
 
-/* Стилі для зміни фону/кольору карток при зміні теми */
-body.light-theme .site-header,
 body.light-theme .current-weather>div,
 body.light-theme .forecast>div,
 body.light-theme .search-form input,
-/* Змінено селектор */
 body.light-theme .hour-card {
     background-color: var(--card-bg-light);
-    color: var(--text-color-light);
     border: 1px solid #e0e0e0;
 }
 
-body.light-theme .search-form input::placeholder {
-    /* Змінено селектор */
-    color: var(--text-muted-light);
-}
+body.light-theme .search-form input::placeholder {}
 
 body.light-theme h1,
-body.light-theme h2 {
-    color: var(--text-color-light);
-}
+body.light-theme h2 {}
 
 body.light-theme p,
 body.light-theme time,
 body.light-theme small,
 body.light-theme span.temp,
 body.light-theme span.day,
-body.light-theme li {
-    color: var(--text-color-light);
-}
+body.light-theme li {}
 
 body.light-theme .current-time,
-body.light-theme .main-temp {
-    color: var(--accent-color-light);
-}
+body.light-theme .main-temp {}
 
 body.light-theme .current-date,
 body.light-theme .feels-like,
@@ -110,33 +78,19 @@ body.light-theme .daily-forecast .day,
 body.light-theme .hour-card time,
 body.light-theme .hour-card .wind,
 body.light-theme .search-form .search-icon,
-/* Змінено селектор */
-body.light-theme .search-form .search-submit-btn
+body.light-theme .search-form .search-submit-btn {}
 
-/* Додано кнопку */
-    {
-    color: var(--text-muted-light);
-}
-
-body.light-theme .sun-times time {
-    color: var(--text-color-light);
-}
+body.light-theme .sun-times time {}
 
 body.light-theme .current-location-btn {
     background-color: var(--accent-color-light);
-    color: white;
 }
 
 body.light-theme .search-form .search-submit-btn:hover,
-/* Додано кнопку */
-body.light-theme .search-form .search-submit-btn:focus {
-    color: var(--text-color-light);
-}
-
+body.light-theme .search-form .search-submit-btn:focus {}
 
 body.light-theme .hourly-forecast h2,
 body.light-theme .daily-forecast h2 {
-    color: var(--text-muted-light);
     border-bottom-color: #ddd;
 }
 
@@ -152,7 +106,6 @@ body.light-theme .hour-card {
     background-color: #f8f8f8;
 }
 
-/* --- Перемикач Теми --- */
 body.light-theme .switch-clider {
     background-color: #ccc;
 }
@@ -161,15 +114,11 @@ body.light-theme .switch-input:checked+.switch-clider {
     background-color: #5a5a5a;
 }
 
-body.light-theme .switch-input:not(:checked)+.switch-clider {
-    background-color: #2196f3;
-}
+body.light-theme .switch-input:not(:checked)+.switch-clider {}
 
 body.light-theme .switch-input:focus+.switch-clider {
     box-shadow: 0 0 2px #6bbaff;
 }
-
-/* --- Кінець стилів для світлої теми --- */
 
 .container {
     width: 100%;
@@ -183,7 +132,6 @@ main.container {
     padding-bottom: var(--container-padding);
 }
 
-/* Анімація */
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -194,7 +142,6 @@ main.container {
     }
 }
 
-/* Утиліта для візуального приховування (для доступності) */
 .visually-hidden {
     position: absolute;
     width: 1px;
@@ -206,11 +153,12 @@ main.container {
     border: 0;
 }
 
-/* ---- Header ---- */
 .site-header {
     padding-top: var(--container-padding);
     padding-bottom: 10px;
     margin-bottom: 0;
+    background-color: transparent;
+    border: none;
 }
 
 .controls {
@@ -220,7 +168,6 @@ main.container {
     flex-wrap: wrap;
 }
 
-/* ---- Форма пошуку ---- */
 .search-form {
     flex-grow: 1;
     position: relative;
@@ -234,7 +181,6 @@ main.container {
     left: 15px;
     top: 50%;
     transform: translateY(-50%);
-    color: var(--text-muted-dark);
     z-index: 1;
     pointer-events: none;
 }
@@ -245,12 +191,11 @@ main.container {
     border-radius: 20px;
     border: none;
     background-color: var(--card-bg-dark);
-    color: var(--text-color-dark);
     font-size: 1rem;
 }
 
 .search-form input::placeholder {
-    color: var(--text-muted-dark);
+    opacity: 0.7;
 }
 
 .search-submit-btn {
@@ -260,28 +205,24 @@ main.container {
     transform: translateY(-50%);
     background: none;
     border: none;
-    color: var(--text-muted-dark);
     font-size: 1.2rem;
     padding: 5px 8px;
     cursor: pointer;
     line-height: 1;
-    transition: color 0.3s;
+    transition: color 0.3s, opacity 0.3s;
     z-index: 1;
+    opacity: 0.7;
 }
 
 .search-submit-btn:hover,
 .search-submit-btn:focus {
-    color: var(--text-color-dark);
+    opacity: 1;
     outline: none;
 }
-
-/* ---- Кінець форми пошуку ---- */
-
 
 .current-location-btn {
     padding: 10px 20px;
     background-color: var(--accent-color-dark);
-    color: white;
     border: none;
     border-radius: 20px;
     cursor: pointer;
@@ -289,8 +230,13 @@ main.container {
     align-items: center;
     gap: 8px;
     font-weight: bold;
-    transition: background-color 0.3s, transform 0.2s;
+    transition: background-color 0.3s, transform 0.2s, opacity 0.3s;
     flex-shrink: 0;
+    color: #fff;
+}
+
+.btn-geolocation {
+    display: none;
 }
 
 .current-location-btn:hover {
@@ -302,8 +248,6 @@ main.container {
     font-size: 1.2em;
 }
 
-
-/* ---- Ваш Слайдер (з виправленнями) ---- */
 .container-slider {
     display: inline-flex;
     align-items: center;
@@ -354,12 +298,10 @@ main.container {
     box-shadow: 0 0 2px #888;
 }
 
-/* checked = true (темна тема активна) */
 .switch-input:checked+.switch-clider {
     background-color: #4caf50;
 }
 
-/* Коли НЕ checked (світла тема активна) */
 .switch-input:not(:checked)+.switch-clider {
     background-color: #5a5a5a;
 }
@@ -368,15 +310,10 @@ main.container {
     transform: translateX(26px);
 }
 
-/* Коли НЕ checked (світла тема активна) */
 .switch-input:not(:checked)+.switch-clider::before {
     transform: translateX(0px);
 }
 
-/* ---- Кінець слайдера ---- */
-
-
-/* ---- Current Weather ---- */
 .current-weather {
     display: flex;
     gap: 30px;
@@ -391,7 +328,6 @@ main.container {
     padding: var(--container-padding);
     border-radius: var(--border-radius);
     flex: 1 1 280px;
-    /* Дозволяє зменшуватись */
 }
 
 .location-time {
@@ -404,7 +340,6 @@ main.container {
     font-size: 2.5rem;
     font-weight: bold;
     word-break: break-word;
-    /* Додано для переносу довгих назв міст */
 }
 
 .current-time {
@@ -412,18 +347,16 @@ main.container {
     font-size: 4rem;
     font-weight: lighter;
     margin-bottom: 5px;
-    color: var(--text-color-dark);
 }
 
 .current-date {
     font-size: 1.1rem;
-    color: var(--text-muted-dark);
     margin: 0;
+    opacity: 0.8;
 }
 
 .weather-details {
     display: flex;
-    /* justify-content: space-between; */
     align-items: center;
     gap: 20px;
     flex-wrap: wrap;
@@ -434,23 +367,22 @@ main.container {
     font-weight: bold;
     margin: 0;
     line-height: 1;
-    color: var(--text-color-dark);
 }
 
 .temperature-info .feels-like {
     margin: 5px 0 15px 0;
-    color: var(--text-muted-dark);
+    opacity: 0.8;
 }
 
 .sun-times p {
     margin: 5px 0;
     font-size: 0.9rem;
-    color: var(--text-muted-dark);
+    opacity: 0.8;
 }
 
 .sun-times time {
     font-weight: bold;
-    color: var(--text-color-dark);
+    opacity: 1;
 }
 
 .weather-condition {
@@ -469,17 +401,13 @@ main.container {
     margin-bottom: 10px;
     animation: pulse 2s infinite ease-in-out alternate;
     line-height: 1;
-    /* Для img всередині */
 }
 
 .weather-condition .weather-icon img {
     display: block;
-    /* Щоб уникнути зайвого відступу під картинкою */
     width: 100px;
-    /* Приклад розміру для іконки-картинки */
     height: 100px;
     margin: 0 auto;
-    /* Центрування */
     object-fit: contain;
 }
 
@@ -488,21 +416,16 @@ main.container {
     font-weight: bold;
     margin: 0;
     word-break: break-word;
-    /* Перенос довгих описів */
 }
 
 .additional-info {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
-    /* Адаптивні колонки */
     gap: 15px 20px;
     text-align: center;
     width: 100%;
-    /* Щоб займало ширину при flex-wrap */
     max-width: 400px;
-    /* Обмеження максимальної ширини */
     margin-left: auto;
-    /* Центрування, якщо flex-wrap спрацював */
     margin-right: auto;
 }
 
@@ -514,7 +437,7 @@ main.container {
     font-size: 1.5em;
     display: block;
     margin-bottom: 5px;
-    color: var(--text-muted-dark);
+    opacity: 0.7;
 }
 
 .additional-info p {
@@ -522,19 +445,14 @@ main.container {
     font-size: 1rem;
     font-weight: bold;
     word-break: break-word;
-    /* Перенос значень */
 }
 
 .additional-info small {
     font-size: 0.8rem;
-    color: var(--text-muted-dark);
     word-break: break-word;
-    /* Перенос назв */
+    opacity: 0.8;
 }
 
-/* ---- Кінець Current Weather ---- */
-
-/* Анімації */
 @keyframes slideUp {
     from {
         transform: translateY(20px);
@@ -557,9 +475,6 @@ main.container {
     }
 }
 
-/* ---- Кінець анімацій ---- */
-
-/* ---- Forecast ---- */
 .forecast {
     display: flex;
     gap: 30px;
@@ -583,8 +498,8 @@ main.container {
     font-size: 1.3rem;
     border-bottom: 1px solid #555;
     padding-bottom: 10px;
-    color: var(--text-muted-dark);
     flex-shrink: 0;
+    opacity: 0.8;
 }
 
 .daily-forecast ul {
@@ -601,7 +516,6 @@ main.container {
     border-bottom: 1px solid #444;
     transition: background-color 0.3s;
     gap: 10px;
-    /* Додамо відступ між елементами */
 }
 
 .daily-forecast li:last-child {
@@ -618,16 +532,13 @@ main.container {
     text-align: center;
     flex-shrink: 0;
     line-height: 1;
-    /* Для img */
 }
 
 .daily-forecast .icon img {
     width: 30px;
-    /* Приклад розміру */
     height: 30px;
     object-fit: contain;
     vertical-align: middle;
-    /* Краще вирівнювання */
 }
 
 .daily-forecast .temp {
@@ -640,9 +551,9 @@ main.container {
 .daily-forecast .day {
     flex-grow: 1;
     text-align: right;
-    color: var(--text-muted-dark);
     font-size: 0.9rem;
     margin-left: 10px;
+    opacity: 0.8;
 }
 
 .hourly-forecast {
@@ -660,18 +571,7 @@ main.container {
     min-height: 150px;
     scrollbar-width: thin;
     scrollbar-color: #666 #444;
-
-    display: flex;
-        /* Розміщуємо картки в ряд */
-        overflow-x: auto;
-        /* Додаємо горизонтальну прокрутку при переповненні */
-        gap: 15px;
-        /* Проміжок між картками (налаштуйте за смаком) */
-        padding: 10px 5px;
-        /* Невеликі відступи зверху/знизу та з боків контейнера */
-    
-        /* Покращення прокрутки на сенсорних пристроях */
-        -webkit-overflow-scrolling: touch;
+    -webkit-overflow-scrolling: touch;
 }
 
 .hourly-cards::-webkit-scrollbar {
@@ -703,21 +603,8 @@ main.container {
     flex-direction: column;
     justify-content: space-between;
     flex-shrink: 0;
-
     flex: 0 0 auto;
-        /* Забороняємо карткам стискатися, зберігаємо їх базовий розмір */
-        min-width: 90px;
-        /* Мінімальна ширина картки (налаштуйте за потребою) */
-        /* Тут ваші стилі для карток: фон, рамки, відступи всередині тощо */
-        /* background-color: #f0f0f0; */
-        /* Приклад фону */
-        border-radius: 8px;
-        /* Приклад заокруглення */
-        padding: 10px;
-        /* Внутрішні відступи */
-        text-align: center;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        /* Приклад тіні */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .hour-card:hover {
@@ -729,7 +616,7 @@ main.container {
     font-size: 0.9rem;
     display: block;
     margin-bottom: 10px;
-    color: var(--text-muted-dark);
+    opacity: 0.8;
 }
 
 .hour-card .icon {
@@ -738,12 +625,10 @@ main.container {
     margin: 5px 0 10px 0;
     flex-grow: 1;
     line-height: 1;
-    /* Для img */
 }
 
 .hour-card .icon img {
     width: 40px;
-    /* Приклад */
     height: 40px;
     margin: 0 auto;
     object-fit: contain;
@@ -758,16 +643,10 @@ main.container {
 
 .hour-card .wind {
     font-size: 0.8rem;
-    color: var(--text-muted-dark);
     margin: 0;
+    opacity: 0.8;
 }
 
-/* ---- Кінець Forecast ---- */
-
-
-/* ---- Адаптивність ---- */
-
-/* Планшети і невеликі десктопи */
 @media (max-width: 992px) {
 
     .current-weather,
@@ -775,14 +654,8 @@ main.container {
         flex-direction: column;
         gap: var(--container-padding);
         margin-bottom: var(--container-padding);
-        /* Відступ між секціями в колонці */
     }
 
-    .current-weather {
-        margin-bottom: var(--container-padding);
-    }
-
-    /* Забезпечуємо відступ */
     .weather-details {
         justify-content: space-around;
     }
@@ -792,7 +665,6 @@ main.container {
     }
 }
 
-/* Мобільні (ландшафт) та планшети (портрет) */
 @media (max-width: 768px) {
     :root {
         --container-padding: 15px;
@@ -817,6 +689,10 @@ main.container {
         justify-content: center;
     }
 
+    .btn-geolocation {
+        display: block;
+    }
+
     .weather-details {
         flex-direction: column;
         align-items: center;
@@ -824,25 +700,17 @@ main.container {
     }
 
     .additional-info {
-        /* grid-template-columns: repeat(2, 1fr); */
-        /* Замінено на auto-fit вище */
         width: 100%;
         max-width: 320px;
         margin-top: 20px;
         gap: 15px 20px;
     }
 
-    h1 {
-        font-size: 2rem;
-    }
+    h1 {}
 
-    .current-time {
-        font-size: 3rem;
-    }
+    .current-time {}
 
-    .main-temp {
-        font-size: 3rem;
-    }
+    .main-temp {}
 
     .weather-condition .weather-icon {
         font-size: 4rem;
@@ -854,7 +722,6 @@ main.container {
     }
 }
 
-/* Мобільні (портрет) */
 @media (max-width: 480px) {
     :root {
         --container-padding: 10px;
@@ -862,11 +729,11 @@ main.container {
 
     main.container {
         padding-top: 10px;
-        /* Зменшимо верхній відступ */
     }
 
     .site-header {
         padding-top: 10px;
+        padding-bottom: 5px;
     }
 
     .location-time,
@@ -881,10 +748,7 @@ main.container {
         font-size: 1.8rem;
     }
 
-    .current-time {
-        font-size: 2.5rem;
-    }
-
+    .current-time,
     .main-temp {
         font-size: 2.5rem;
     }
@@ -904,6 +768,7 @@ main.container {
 
     .additional-info small {
         font-size: 0.7rem;
+        opacity: 0.8;
     }
 
     .hour-card {
@@ -930,49 +795,144 @@ main.container {
         margin-bottom: 15px;
     }
 
-    .site-header {
-        padding-bottom: 5px;
-    }
-
     .controls {
         gap: 10px;
     }
 
-    /* Менший відступ у хедері */
     .search-form input {
         padding-top: 8px;
         padding-bottom: 8px;
         font-size: 0.9rem;
     }
 
-    /* Менший інпут */
     .current-location-btn {
         padding: 8px 15px;
         font-size: 0.9rem;
     }
 
-    /* Менша кнопка */
-
 }
 
-.search-form input,
-.location-time,
-.weather-details,
-.daily-forecast,
-.hourly-forecast {
-    background-color: #bbb;
-    border: 1px solid #aaa;
-    /* Приклад */
+@media (max-width: 320px) {
+
+    h1 {
+        font-size: 1.6rem;
+    }
+
+    .current-time,
+    .main-temp {
+        font-size: 2.2rem;
+    }
+
+    .daily-forecast,
+    .hourly-forecast {
+        padding: 12px;
+    }
+
+    .daily-forecast h2,
+    .hourly-forecast h2 {
+        font-size: 1.1rem;
+        margin-bottom: 12px;
+        padding-bottom: 8px;
+    }
+
+    .daily-forecast li {
+        padding: 8px 0;
+        gap: 8px;
+    }
+
+    .daily-forecast .temp {
+        font-size: 0.9rem;
+        flex-basis: 50px;
+    }
+
+    .daily-forecast .day {
+        font-size: 0.85rem;
+    }
+
+    .daily-forecast .icon img {
+        width: 25px;
+        height: 25px;
+    }
+
+    .hourly-cards {
+        gap: 10px;
+        padding: 8px 5px 12px 5px;
+        min-height: 130px;
+    }
+
+    .hour-card {
+        min-width: 75px;
+        padding: 8px;
+    }
+
+    .hour-card time {
+        font-size: 0.8rem;
+        margin-bottom: 6px;
+    }
+
+    .hour-card .icon {
+        font-size: 1.6rem;
+        margin: 4px 0 8px 0;
+    }
+
+    .hour-card .icon img {
+        width: 30px;
+        height: 30px;
+    }
+
+    .hour-card .temp {
+        font-size: 1rem;
+    }
+
+    .hour-card .wind {
+        font-size: 0.75rem;
+    }
+
+    .additional-info {
+        grid-template-columns: 1fr;
+        gap: 10px;
+        max-width: none;
+    }
+
+    .additional-info p {
+        font-size: 0.85rem;
+    }
+
+    .additional-info small {
+        font-size: 0.7rem;
+    }
+
+    .additional-info .icon {
+        font-size: 1.2em;
+    }
+
+    .search-form input {
+        padding: 6px 40px 6px 35px;
+        font-size: 0.85rem;
+    }
+
+    .search-form .search-icon {
+        left: 12px;
+    }
+
+    .search-submit-btn {
+        font-size: 1.1rem;
+        padding: 4px 6px;
+    }
+
+    .current-location-btn {
+        padding: 6px 12px;
+        font-size: 0.85rem;
+        gap: 5px;
+    }
+
+    .current-location-btn .location-icon {
+        font-size: 1.1em;
+    }
 }
 
-.hour-card {
-    background-color: #aaa;
-}
-
-/* Стилі для темної теми (коли body має клас .change) */
 body.change {
     background-color: #222;
-    /* Або інший темний колір */
     color: #eee;
 }
 
@@ -983,9 +943,4 @@ body.change .daily-forecast,
 body.change .hourly-forecast {
     background-color: #444;
     border-color: #555;
-    /* Приклад */
-}
-
-body.change .hour-card {
-    background-color: #555;
 }

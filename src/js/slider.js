@@ -7,22 +7,20 @@ document.addEventListener('DOMContentLoaded', function () {
     return;
   }
 
-  // Встановити початковий стан з localStorage
-  if (localStorage.getItem('body-style') === 'true') {
-    body.classList.add('change');
-
-    slider.checked = true;
-  } else {
-    body.classList.remove('change'); // На випадок, якщо клас був раніше
-    slider.checked = false;
+  function applyTheme(isDark) {
+    body.classList.toggle('dark-theme', isDark);
+    body.classList.toggle('light-theme', !isDark);
+    slider.checked = isDark;
   }
 
-  // Обробник зміни стану перемикача
-  function handleClick() {
-    const isChanged = slider.checked;
-    body.classList.toggle('change', isChanged);
-    localStorage.setItem('body-style', String(isChanged)); // Зберегти як рядок 'true'/'false'
+  const savedThemeIsDark = localStorage.getItem('body-style') === 'true';
+  applyTheme(savedThemeIsDark);
+
+  function handleThemeChange() {
+    const isDark = slider.checked;
+    applyTheme(isDark);
+    localStorage.setItem('body-style', String(isDark));
   }
 
-  slider.addEventListener('change', handleClick);
+  slider.addEventListener('change', handleThemeChange);
 });
